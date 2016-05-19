@@ -5,9 +5,22 @@
 # waste on day n makes more waste likely on day n+1.
 birdwaste <- function(n) {
   weight <- rnorm(1, 400, 40)
-  rand <- rnorm(n, weight * 0.1, .1)
-  filt <- filter(rand, filter=c(1, -1, 1, -1, 1), circular=T)
-  return(filt)
+  waste <- rep(0, n)
+  mean <- weight * 0.1
+  mean0 <- mean / 2
+  mean1 <- mean * 2
+  waste[1] <- rnorm(1, mean, mean * .1)
+  for (i in 2:n) {
+    waste[i] <- ifelse(
+      waste[i - 1] > mean,
+      rnorm(1, mean0, mean * .1),
+      rnorm(1, mean1, mean * .1)
+    )
+    if (waste[i] < 0)
+      waste[i] <- 0
+  
+  }
+  return(waste)
 }
 
 plot(birdwaste(100))
