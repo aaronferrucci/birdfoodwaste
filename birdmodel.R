@@ -3,7 +3,6 @@
 # variable for waste averages one tenth of the bird weight.
 # A filter is used to model the effect of the bird crop; little
 # waste on day n makes more waste likely on day n+1.
-library(ggplot2)
 birdwaste <- function(n) {
   weight <- rnorm(1, 400, 40)
   waste <- rep(0, n)
@@ -23,12 +22,5 @@ birdwaste <- function(n) {
   }
   # Negative waste makes no sense - just reflect around y=0
   waste <- abs(waste)
-  return(data.frame(waste=waste))
+  return(data.frame(day=1:n, waste=waste))
 }
-w <- birdwaste(100)
-mean <- mean(w$waste)
-p <- ggplot(data=w, aes(w$waste)) +
-  geom_histogram(binwidth=1) +
-  xlab("Waste (g)") +
-  geom_vline(xintercept = mean, color = "red", size = 2)
-print(p)
