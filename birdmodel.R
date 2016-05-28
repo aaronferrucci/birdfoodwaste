@@ -39,11 +39,12 @@ birdwaste <- function(num_days) {
 }
 
 multi_means <- function(num_days, num_birds) {
-  means <- numeric(0)
-  for (i in 1:num_birds) {
-    w <- birdwaste(num_days)
-    means <- append(means, mean(w$waste))
-
-  }
+#  means <- numeric(0)
+#  for (i in 1:num_birds) {
+#    w <- birdwaste(num_days)
+#    means <- append(means, mean(w$waste))
+#
+#  }
+  means <- sapply(1:num_birds, FUN = function(x) mean(birdwaste(num_days)$waste))
   return(means)
 }
