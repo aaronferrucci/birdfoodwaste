@@ -21,29 +21,29 @@ references:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache=TRUE, echo=FALSE)
 ```
-```{r echo=FALSE}
+```{r}
 source("birdmodel.R")
 source("plot.R")
 ```
 
 ## Intro
-Data Skeptic is a podcast which covers topics in data science. Podcast episodes alternate between interview episodes and shorter mini-episodes, which cover basic data sicence concepts. Episode #77[@DS77] introduces a topic from statistics, The Central Limit Theorem (CLT). Kyle described some graphics to illustrate the idea - but it was a bit hard to follow as just words. This document is my attempt at producing those graphics.
+Data Skeptic is a podcast which covers topics in data science. Podcast episodes alternate between interview episodes and shorter mini-episodes, which cover basic data science concepts. Episode #77[@DS77] introduces a topic from statistics, the Central Limit Theorem (CLT). To illustrate the idea, Kyle described some graphics - but it was a bit hard to follow. This document is my attempt to produce those graphics.
 
 The CLT says that, for any distribution X, repeated means of a number of samples from X follow a normal distribution. The amazing thing is that this works even if X itself is not normally distributed.
 
 ## Bird Food Waste Model
 To show off the CLT, we need some sort of distribution that we can take repeated samples of - say, 100 samples in a batch - and then compute the mean. Then we repeat that process - take 100 samples, compute the mean - and look at the distribution of the mean values. The most surprising result happens when the original distribution has some odd shape - something asymmetrical, rather than a typical bell curve.
 
-The hypothetical data set used in the podcast episode had to do with birds' habit of throwing away some of their food each day. The day after throwing away a lot of food, a bird is likely to eat more food. Linh Da offered another complicating factor: some birds have a crop, where they store food. The amount of food in the crop (with the implication that food in the crop wasn't wasted, on the previous day) might influence the amount of food wasted.
+The hypothetical data set used in the podcast episode had to do with birds' habit of throwing away some of their food each day. The day after throwing away a lot of food, a bird is likely to eat more food. Linh Da offered a complicating factor: some birds have a crop, where they store food. If Yoshi stores food in his crop on a particular day, then on the following day he might tend to waste more food, since he can eat from his crop.
 
 A simple model of bird food waste uses two normal distributions; a low-mean normal used when the previous day had a high amount of waste, and a high-mean normal used for the opposite case, when the previous day had a low amount of waste. The result as a time series has an oscillatory nature, and in the histogram of the data, we see two distinct peaks. 
 
 Have a look at birdmodel.R, and the comments therein, for more details about the model.
 
 ### Bird Food Waste - Time Series
-```{r echo=FALSE, fig.cap="100 simulated days of bird waste. Notice that days tend to alternate between high and low waste amounts."}
+```{r fig.cap="100 simulated days of bird waste. Notice that days tend to alternate between high and low waste amounts."}
 set.seed(440)
 w <- birdwaste(1000)
 p <- bw_line(w[1:100,])
@@ -52,7 +52,7 @@ print(p)
 
 ### Bird Waste - Histogram
 Let's have a look at the histogram of 1000 days from the bird food waste model. Note that there are two distinct peaks, and a spike near 0. That's not normal! The overall mean is marked as a vertical red line on the chart.
-```{r echo=FALSE, fig.cap="1000 simulated days of bird waste - histogram."}
+```{r fig.cap="1000 simulated days of bird waste - histogram."}
 # w <- birdwaste(1000)
 p <- bw_hist(w)
 print(p)
@@ -60,13 +60,13 @@ print(p)
 
 ## Visualization: Repeated Experiments
 Now, as suggested in the podcast, I'll ask all my bird-owner friends to send me their data, and I'll "stack up" all the histograms and means. The mean values (vertical red lines) tend to cluster in the middle, with decreasing samples further out from the middle. Could it be... normal?
-```{r echo=FALSE, fig.cap="Stacked Histogram from 100 birds over 100 days."}
+```{r fig.cap="Stacked Histogram from 100 birds over 100 days."}
 multi <- multi_hist(1000, 100)
 print(multi$plot)
 ```
 
-To get a closer look at the histogram means, I'll rotate the histogram, dim the histogram plot a bit.
-```{r echo=FALSE, fig.cap="Rotated Histogram..."}
+To get a closer look at the histogram means, I'll rotate the histogram, and dim the histogram plot a bit.
+```{r fig.cap="Rotated Histogram..."}
 multi <- multi_hist(1000, 100, alphahist = 0.005)
 print(multi$plot + coord_flip())
 ```
@@ -74,10 +74,11 @@ print(multi$plot + coord_flip())
 ## Focus on the Mean
 The mean of birds' data is a random variable, and the CLT predicts that the distribution of that variable is normal. Let's have a look.
 
-``` {r echo=FALSE, fig.cap="Histogram of means: 5,000 birds, 10,000 days of waste"}
+``` {r fig.cap="Histogram of means: 5,000 birds, 10,000 days of waste"}
 p <- clt_hist(10000, 5000)
 print(p)
 ```
 
-This does look pretty normal, but is it? During the podcast Kyle hinted that there would be a mini-episode to answer that question... for now, I'll be content with a qualitative result.
+## Wrapup and Future Work
+This does look pretty normal, but is it? During the podcast Kyle hinted that there would be a mini-episode to answer that question... some sort of normality test. For now, I'll be content with a qualitative result.
 
