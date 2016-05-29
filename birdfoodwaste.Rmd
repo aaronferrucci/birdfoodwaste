@@ -18,6 +18,15 @@ references:
     given: Kyle
   container-title: Data Skeptic Podcast
   URL: http://dataskeptic.com/epnotes/ep77_central-limit-theorem.php
+- id: AF16
+  title: Visualizing Data Skeptic's CLT Mini-Episode
+  issued:
+    year: 2016
+    month: 5
+  author:
+  - family: Ferrucci
+    given: Aaron
+  URL: https://github.com/aaronferrucci/birdfoodwaste
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +38,7 @@ source("plot.R")
 ```
 
 ## Intro
-Data Skeptic is a podcast which covers topics in data science. Podcast episodes alternate between interview episodes and shorter mini-episodes, which cover basic data science concepts. Episode #77[@DS77] introduces a topic from statistics, the Central Limit Theorem (CLT). To illustrate the idea, Kyle described some graphics - but it was a bit hard to follow. This document is my attempt to produce those graphics.
+Data Skeptic is a podcast which covers topics in data science. Podcast episodes alternate between interview episodes and shorter mini-episodes, which cover basic data science concepts. Episode #77[@DS77] introduces a topic from statistics, the Central Limit Theorem (CLT). To illustrate the idea, Kyle described some graphics - but it was a bit hard to follow. This document is my attempt to produce those graphics. The source for the document is on github [@AF16].
 
 The CLT says that, for any distribution X, repeated means of a number of samples from X follow a normal distribution. The amazing thing is that this works even if X itself is not normally distributed.
 
