@@ -1,2 +1,3 @@
 # birdfoodwaste
-![alt text](https://github.com/aaronferrucci/birdfoodwaste/blob/master/example.png "example plot")
+A look at Data Skeptic's Central Limit Theorem mini-episode. The rendered
+writeup is hosted on Rpubs, [here](http://rpubs.com/aaronferrucci/184691).
